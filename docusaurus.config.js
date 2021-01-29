@@ -17,6 +17,11 @@ module.exports = {
 			},
 			items: [
 				{
+					href: 'https://strapi.guru',
+					label: 'Blog',
+					position: 'right',
+				},
+				{
 					href: 'https://github.com/derrickmehaffy/strapi-guru-docs',
 					label: 'GitHub',
 					position: 'right',
@@ -55,6 +60,10 @@ module.exports = {
 				{
 					title: 'More',
 					items: [
+						{
+							label: 'My Blog',
+							href: 'https://strapi.guru',
+						},
 						{
 							label: 'GitHub',
 							href: 'https://github.com/derrickmehaffy/strapi-guru-docs',

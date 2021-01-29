@@ -34,10 +34,10 @@ module.exports = {
 				{
 					title: 'Docs',
 					items: [
-						{
-							label: 'Deploy Guides',
-							to: 'deploy-guides/',
-						},
+						// {
+						// 	label: 'Deploy Guides',
+						// 	to: 'deploy-guides/',
+						// },
 					],
 				},
 				{

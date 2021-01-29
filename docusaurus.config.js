@@ -17,12 +17,6 @@ module.exports = {
 			},
 			items: [
 				{
-					to: 'docs/',
-					activeBasePath: 'docs',
-					label: 'Docs',
-					position: 'left',
-				},
-				{
 					href: 'https://github.com/derrickmehaffy/strapi-guru-docs',
 					label: 'GitHub',
 					position: 'right',
@@ -36,12 +30,8 @@ module.exports = {
 					title: 'Docs',
 					items: [
 						{
-							label: 'Style Guide',
-							to: 'docs/',
-						},
-						{
-							label: 'Second Doc',
-							to: 'docs/doc2/',
+							label: 'Deploy Guides',
+							to: 'docs/deploy-guides/',
 						},
 					],
 				},
@@ -80,9 +70,10 @@ module.exports = {
 			'@docusaurus/preset-classic',
 			{
 				docs: {
+					routeBasePath: '/',
 					sidebarPath: require.resolve('./sidebars.js'),
 					// Please change this to your repo.
-					editUrl: 'https://github.com/facebook/docusaurus/edit/master/website/',
+					editUrl: 'https://github.com/derrickmehaffy/strapi-guru-docs/edit/master/',
 				},
 				theme: {
 					customCss: require.resolve('./src/css/custom.css'),

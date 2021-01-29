@@ -36,7 +36,7 @@ module.exports = {
 					items: [
 						{
 							label: 'Deploy Guides',
-							to: 'docs/deploy-guides/',
+							to: 'deploy-guides/',
 						},
 					],
 				},
@@ -71,7 +71,7 @@ module.exports = {
 					],
 				},
 			],
-			copyright: `Copyright © ${new Date().getFullYear()} The Strapi Guru, Inc.`,
+			copyright: `Copyright © ${new Date().getFullYear()} The Strapi Guru`,
 		},
 	},
 	presets: [

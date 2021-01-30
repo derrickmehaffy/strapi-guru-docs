@@ -40,3 +40,9 @@ You can find a list below, or just visit my [GitHub page](https://github.com/der
 - [This documentation](https://github.com/derrickmehaffy/strapi-guru-docs)
 - Strapi Community packages
   - [strapi-middleware-cache](https://github.com/patrixr/strapi-middleware-cache#readme) => Contributor
+
+## Why aren't any of your guides about serverless?
+
+Short answer, I'm not a fan of serverless and prefer bare-metal where I can or virtual machines where I can't. There are various personal reasons, but the easiest one is I prefer security and control over convenience. Serverless can make deployments easier, but at the cost of control and putting your faith into the provider to maintain proper security.
+
+There is some implied security risk when using a public cloud, but far less when using a virtual machine than serverless.

@@ -10,7 +10,7 @@ For modules used from Ansible-Galaxy / GitHub see the [requirements file](https:
 
 Ansible within this template does the following:
 
-### `main.yml` Playbook
+### main.yml
 
 1. Loads encrypted Variables from `crypt_vars/all.yml`
 2. Loads tf_vars from Terraform via `tf_vars/tf_vars.yml`
@@ -22,7 +22,11 @@ User definitions are as such (They all have no password set, aka disabled passwo
 
 - Root user => initial connection for main.yml, using defined SSH key in Terraform
 - Devops user => "Admin" sudo user you should regularly use to connect or allow team members to connect to (adjust to fit your needs) and also used for the database/strapi server setup (stop using root people)
-- Deploy user => Strapi's service user, what Strapi runs as (**Does not have sudo perms, this is intended!**)
+- Deploy user => Strapi's service user, what Strapi runs as
+
+:::warning
+Deploy user does not have sudo perms, this is intended!
+:::
 
 Apt packages that are installed on both systems are:
 
@@ -84,9 +88,11 @@ Eventually I want to add checking to ensure the Strapi project started correctly
 
 ### playbooks/strapi_rollback.yml
 
-**This feature is not developed yet**
+:::info
+This feature is not developed yet
+:::
 
-### A-Requirements
+## Ansible Requirements
 
 First off, if you are not familiar with Ansible-Vault what are you doing with your life? Go do some research. There is a default Ansible config that sets some sane defaults located [here](./ansible/ansible.cfg). I suggest you read through it to understand how it's setup.
 

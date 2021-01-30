@@ -102,4 +102,13 @@ Next you need to make a `vault_password` file at the ansible folder root to encr
 
 ## Ansible Instructions
 
-Coming soon
+:::info
+This section is still a WIP
+:::
+
+Rough breakdown for those that can't wait:
+
+- run the `./install_requirements.sh`
+- create your `vault_password` file
+- configure your vars
+- run the `./run.sh main.yml`

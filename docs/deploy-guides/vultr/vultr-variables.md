@@ -12,7 +12,7 @@ It is recommended that you review both the [Terraform Documentation](https://www
 It is up to you, the user, to secure your variables!
 :::
 
-### Terraform Variables
+## Terraform Variables
 
 Variables are set in the `./terraform/terraform.tfvars`, there is an [example file](https://github.com/derrickmehaffy/strapi-vultr-deploy/blob/main/terraform/example.tfvars) that you can copy and modify.
 
@@ -60,13 +60,9 @@ There are certain variables that are pulled from Vultr Public APIs:
 - `instance_os` => https://api.vultr.com/v2/os
 - `strapi_plan` / `database_plan` => https://api.vultr.com/v2/plans
 
-### Ansible Variables
+## Ansible Variables
 
 Alright off to the variables, there is a lot so good luck :)
-
-:::info
-You'll probably need to scroll the table, lots of info, sorry
-:::
 
 :::warning
 By default the Ansible configs will use the staging Let's Encrypt Server. These certs are not considered valid, when you are ready to move to production you should disable the `acme_sh_default_staging` variable. You can force a new cert generation by setting `acme_sh_default_force_issue` to true.
@@ -74,43 +70,83 @@ By default the Ansible configs will use the staging Let's Encrypt Server. These 
 **ONLY RUN THIS ONCE** as true!
 :::
 
-| Var Name                                       | Type    | Default                                                 | Required | File Path               | Automated |
-| ---------------------------------------------- | ------- | ------------------------------------------------------- | -------- | ----------------------- | --------- |
-| See `crypt_vars/all.yml` file                  | Various | Various                                                 | Various  | crypt_vars/all.yml      | N         |
-| strapi_db_pass                                 | string  | null                                                    | Y        | crypt_vars/database.yml | N         |
-| acme_sh_account_email                          | string  | null                                                    | Y        | crypt_vars/strapi.yml   | N         |
-| acme_sh_default_dns_provider_api_keys.CF_KEY   | string  | null                                                    | Y        | crypt_vars/strapi.yml   | N         |
-| acme_sh_default_dns_provider_api_keys.CF_Email | string  | null                                                    | Y        | crypt_vars/strapi.yml   | N         |
-| apt_dependencies                               | array   | Various                                                 | Y        | group_vars/all.yml      | Y         |
-| apt_upgrade                                    | string  | dist                                                    | Y        | group_vars/all.yml      | Y         |
-| apt_autoremove                                 | boolean | yes                                                     | Y        | group_vars/all.yml      | Y         |
-| mysql_packages                                 | array   | Various                                                 | Y        | group_vars/database.yml | Y         |
-| mysql_bind_address                             | string  | 0.0.0.0                                                 | Y        | group_vars/database.yml | Y         |
-| mysql_databases                                | object  | strapi_db_name                                          | Y        | group_vars/database.yml | Y         |
-| mysql_users                                    | object  | strapi_db_user                                          | Y        | group_vars/database.yml | Y         |
-| nodejs_version                                 | int     | 14                                                      | Y        | group_vars/strapi.yml   | Y         |
-| application_dir                                | string  | /srv/deploy/{{ application_name }}                      | Y        | group_vars/strapi.yml   | Y         |
-| application_git                                | string  | https://github.com/derrickmehaffy/strapi-deploy-example | Y        | group_vars/strapi.yml   | N         |
-| acme_sh_become_user                            | string  | root                                                    | Y        | group_vars/strapi.yml   | Y         |
-| acme_sh_git_url                                | string  | https://github.com/acmesh-official/acme.sh              | Y        | group_vars/strapi.yml   | Y         |
-| acme_sh_git_version                            | string  | master                                                  | Y        | group_vars/strapi.yml   | Y         |
-| acme_sh_upgrade                                | boolean | true                                                    | Y        | group_vars/strapi.yml   | Y         |
-| acme_sh_list_domains                           | boolean | true                                                    | Y        | group_vars/strapi.yml   | Y         |
-| acme_sh_default_debug                          | boolean | false                                                   | Y        | group_vars/strapi.yml   | Y         |
-| acme_sh_default_dns_sleep                      | int     | 120                                                     | Y        | group_vars/strapi.yml   | Y         |
-| acme_sh_copy_certs_to_path                     | string  | /etc/nginx/ssl                                          | Y        | group_vars/strapi.yml   | Y         |
-| acme_sh_default_dns_provider                   | string  | dns_cf                                                  | Y        | group_vars/strapi.yml   | Y         |
-| acme_sh_default_issue_renew_hook               | string  | sudo systemctl reload nginx                             | Y        | group_vars/strapi.yml   | Y         |
-| acme_sh_domains                                | object  | application_url                                         | Y        | group_vars/strapi.yml   | Y         |
-| acme_sh_default_staging                        | boolean | true                                                    | Y        | group_vars/strapi.yml   | N         |
-| acme_sh_default_force_issue                    | boolean | false                                                   | Y        | group_vars/strapi.yml   | N         |
-| nginx_remove_default_vhost                     | boolean | true                                                    | Y        | group_vars/strapi.yml   | Y         |
-| nginx_client_max_body_size                     | string  | 256m                                                    | Y        | group_vars/strapi.yml   | N         |
-| nginx_upstreams                                | object  | See file                                                | Y        | group_vars/strapi.yml   | Y         |
-| nginx_vhosts                                   | object  | See file                                                | Y        | group_vars/strapi.yml   | Y         |
-| root_ssh_key                                   | string  | Based on Terraform Output                               | Y        | tf_vars/tf_vars.yml     | Y         |
-| strapi_db_name                                 | string  | Based on Terraform Output                               | Y        | tf_vars/tf_vars.yml     | Y         |
-| strapi_db_user                                 | string  | Based on Terraform Output                               | Y        | tf_vars/tf_vars.yml     | Y         |
-| strapi_db_host                                 | string  | Based on Terraform Output                               | Y        | tf_vars/tf_vars.yml     | Y         |
-| application_name                               | string  | Based on Terraform Output                               | Y        | tf_vars/tf_vars.yml     | Y         |
-| application_url                                | string  | Based on Terraform Output                               | Y        | tf_vars/tf_vars.yml     | Y         |
+### crypt_vars/all.yml
+
+| Var Name                      | Type    | Default | Required | Automated |
+| ----------------------------- | ------- | ------- | -------- | --------- |
+| See `crypt_vars/all.yml` file | Various | Various | Various  | N         |
+
+### crypt_vars/database.yml
+
+| Var Name       | Type   | Default | Required | Automated |
+| -------------- | ------ | ------- | -------- | --------- |
+| strapi_db_pass | string | null    | Y        | N         |
+
+### crypt_vars/strapi.yml
+
+| Var Name                                       | Type   | Default | Required | Automated |
+| ---------------------------------------------- | ------ | ------- | -------- | --------- |
+| acme_sh_account_email                          | string | null    | Y        | N         |
+| acme_sh_default_dns_provider_api_keys.CF_KEY   | string | null    | Y        | N         |
+| acme_sh_default_dns_provider_api_keys.CF_Email | string | null    | Y        | N         |
+
+### group_vars/all.yml
+
+| Var Name         | Type    | Default | Required | Automated |
+| ---------------- | ------- | ------- | -------- | --------- |
+| apt_dependencies | array   | Various | Y        | Y         |
+| apt_upgrade      | string  | dist    | Y        | Y         |
+| apt_autoremove   | boolean | yes     | Y        | Y         |
+
+### group_vars/database.yml
+
+| Var Name           | Type   | Default        | Required | Automated |
+| ------------------ | ------ | -------------- | -------- | --------- |
+| mysql_packages     | array  | Various        | Y        | Y         |
+| mysql_bind_address | string | 0.0.0.0        | Y        | Y         |
+| mysql_databases    | object | strapi_db_name | Y        | Y         |
+| mysql_users        | object | strapi_db_user | Y        | Y         |
+
+### group_vars/strapi.yml
+
+:::info
+You may need to scroll the table
+:::
+
+| Var Name                         | Type    | Default                                    | Required | Automated |
+| -------------------------------- | ------- | ------------------------------------------ | -------- | --------- |
+| nodejs_version                   | int     | 14                                         | Y        | Y         |
+| application_dir                  | string  | /srv/deploy/{{ application_name }}         | Y        | Y         |
+| application_git                  | string  | null                                       | Y        | N         |
+| acme_sh_become_user              | string  | root                                       | Y        | Y         |
+| acme_sh_git_url                  | string  | https://github.com/acmesh-official/acme.sh | Y        | Y         |
+| acme_sh_git_version              | string  | master                                     | Y        | Y         |
+| acme_sh_upgrade                  | boolean | true                                       | Y        | Y         |
+| acme_sh_list_domains             | boolean | true                                       | Y        | Y         |
+| acme_sh_default_debug            | boolean | false                                      | Y        | Y         |
+| acme_sh_default_dns_sleep        | int     | 120                                        | Y        | Y         |
+| acme_sh_copy_certs_to_path       | string  | /etc/nginx/ssl                             | Y        | Y         |
+| acme_sh_default_dns_provider     | string  | dns_cf                                     | Y        | Y         |
+| acme_sh_default_issue_renew_hook | string  | sudo systemctl reload nginx                | Y        | Y         |
+| acme_sh_domains                  | object  | application_url                            | Y        | Y         |
+| acme_sh_default_staging          | boolean | true                                       | Y        | N         |
+| acme_sh_default_force_issue      | boolean | false                                      | Y        | N         |
+| nginx_remove_default_vhost       | boolean | true                                       | Y        | Y         |
+| nginx_client_max_body_size       | string  | 256m                                       | Y        | N         |
+| nginx_upstreams                  | object  | See file                                   | Y        | Y         |
+| nginx_vhosts                     | object  | See file                                   | Y        | Y         |
+
+### tf_vars/tf_vars.yml
+
+:::info
+These variables are automatically set by terraform and should not require any modification.
+:::
+
+| Var Name         | Type   | Default                   | Required | Automated |
+| ---------------- | ------ | ------------------------- | -------- | --------- |
+| root_ssh_key     | string | Based on Terraform Output | Y        | Y         |
+| strapi_db_name   | string | Based on Terraform Output | Y        | Y         |
+| strapi_db_user   | string | Based on Terraform Output | Y        | Y         |
+| strapi_db_host   | string | Based on Terraform Output | Y        | Y         |
+| application_name | string | Based on Terraform Output | Y        | Y         |
+| application_url  | string | Based on Terraform Output | Y        | Y         |

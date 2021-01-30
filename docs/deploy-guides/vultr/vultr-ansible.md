@@ -99,3 +99,7 @@ First off, if you are not familiar with Ansible-Vault what are you doing with yo
 This template uses various roles from Ansible-Galaxy and misc GitHub repos, I suggest you look at the requirements file and review their documentation if you plan to make changes. There is also a [script](https://github.com/derrickmehaffy/strapi-vultr-deploy/blob/main/ansible/install_requirements.sh) to automatically install them.
 
 Next you need to make a `vault_password` file at the ansible folder root to encrypt/decrypt the `crypt_vars/*` files. See the [example folder](https://github.com/derrickmehaffy/strapi-vultr-deploy/tree/main/ansible/crypt_vars/example) and it's [README.md](https://github.com/derrickmehaffy/strapi-vultr-deploy/blob/main/ansible/crypt_vars/example/README.md) for some templates and a sample encrypted file. There is a password generation script located [here](https://github.com/derrickmehaffy/strapi-vultr-deploy/blob/main/ansible/scripts/gen_pwd.sh) for my fellow lazy folks. **Keep that password safe and handy, if you lose it, back to square one on configuring shit**
+
+## Ansible Instructions
+
+Coming soon

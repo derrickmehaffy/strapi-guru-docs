@@ -6,8 +6,8 @@ module.exports = {
 	onBrokenLinks: 'throw',
 	onBrokenMarkdownLinks: 'warn',
 	favicon: 'img/favicon.ico',
-	organizationName: 'derrickmehaffy', // Usually your GitHub org/user name.
-	projectName: 'strapi-guru-docs', // Usually your repo name.
+	organizationName: 'derrickmehaffy',
+	projectName: 'strapi-guru-docs',
 	themeConfig: {
 		navbar: {
 			title: 'The Strapi Guru',
@@ -33,12 +33,7 @@ module.exports = {
 			links: [
 				{
 					title: 'Docs',
-					items: [
-						// {
-						// 	label: 'Deploy Guides',
-						// 	to: 'deploy-guides/',
-						// },
-					],
+					items: [],
 				},
 				{
 					title: 'Community',
@@ -74,6 +69,18 @@ module.exports = {
 			copyright: `Copyright © ${new Date().getFullYear()} The Strapi Guru`,
 		},
 	},
+	plugins: [
+		[
+			require.resolve('@cmfcmf/docusaurus-search-local'),
+			{
+				indexDocs: true,
+				docsRouteBasePath: '/',
+				indexDocSidebarParentCategories: 3,
+				indexPages: false,
+				language: 'en',
+			},
+		],
+	],
 	presets: [
 		[
 			'@docusaurus/preset-classic',
@@ -81,7 +88,6 @@ module.exports = {
 				docs: {
 					routeBasePath: '/',
 					sidebarPath: require.resolve('./sidebars.js'),
-					// Please change this to your repo.
 					editUrl: 'https://github.com/derrickmehaffy/strapi-guru-docs/edit/master/',
 				},
 				theme: {

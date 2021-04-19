@@ -44,5 +44,10 @@ module.exports = {
         ],
       },
     ],
+    'Strapi-Hooks': [
+      {
+        Freshdesk: ['strapi-hooks/freshdesk/freshdesk-intro'],
+      },
+    ],
   },
 };

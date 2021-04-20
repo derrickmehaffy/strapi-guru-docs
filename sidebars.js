@@ -46,7 +46,11 @@ module.exports = {
     ],
     'Strapi-Hooks': [
       {
-        Freshdesk: ['strapi-hooks/freshdesk/freshdesk-intro'],
+        Freshdesk: [
+          'strapi-hooks/freshdesk/freshdesk-intro',
+          'strapi-hooks/freshdesk/freshdesk-config',
+          'strapi-hooks/freshdesk/freshdesk-api',
+        ],
       },
     ],
   },

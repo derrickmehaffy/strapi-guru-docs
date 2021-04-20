@@ -1,0 +1,57 @@
+---
+id: freshdesk-intro
+title: Freshdesk Hook Introduction
+sidebar_label: Introduction
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## About
+
+This hook allows you to use [Freshdesk](https://www.freshdesk.com/) as a service in [Strapi](https://github.com/strapi/strapi) `strapi.services.freshdesk`. Freshdesk is a ticket management software for supporting customers and clients, it allows you to create and manage companies, contacts, and tickets as well as having a customer portal where you can write support articles, FAQs, and run a forum for your customers.
+
+This hook is using the `freshdesk-api` package, for additional information please see their package [documentation](https://www.npmjs.com/package/freshdesk-api). This hook does use [bluebird](https://www.npmjs.com/package/bluebird) to switch from callbacks to promise based functions. However it does expose the raw `client` if you wish to use callbacks instead, though that usage is not directly supported.
+
+:::caution
+Please note this hook is still a work in progress and should not be used for production.
+:::
+
+## Requirements
+
+- An existing Freshdesk instance
+- An agent with an API Key
+- A Strapi application (>=3.5.x)
+
+## To-do / Nice to have Features
+
+- [ ] Unified paging parameters across all APIs
+- [ ] Typescript Support
+- [ ] JSDocs Tags for all APIs
+
+## Get the hook
+
+You can install the `strapi-hook-freshdesk` using npm or yarn.
+
+After you install it, you will need to configure it, see the [configuration guide](./freshdesk-config.md)
+
+After you have configured your hook, you can access the hook functions via: `strapi.services.freshdesk`. For more information on using the hook see the detailed [API docs](./freshdesk-api.mdx).
+
+<Tabs
+  defaultValue="yarn"
+  values={[
+    { label: 'yarn', value: 'yarn' },
+    { label: 'npm', value: 'npm' },
+  ]}
+>
+  <TabItem value="yarn">
+
+`yarn add strapi-hook-freshdesk`
+
+  </TabItem>
+  <TabItem value="npm">
+
+`npm i --save strapi-hook-freshdesk`
+
+  </TabItem>
+</Tabs>

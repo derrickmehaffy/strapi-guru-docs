@@ -1,0 +1,162 @@
+---
+id: freshdesk-api
+title: Freshdesk Hook API Docs
+sidebar_label: API Docs
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## Agents
+
+**Core Route -** `strapi.services.freshdesk.agent`
+
+Agents in Freshdesk can be “full-time” or “occasional”. Full time agents are those in your core support team who will log in to your help desk every day. Occasional agents are those who would only need to log in a few times every month, such as the CEO or field staff.
+
+:::caution
+All Agent APIs require admin privileges on the API Key.
+:::
+
+<Tabs
+  defaultValue="find"
+  values={[
+    { label: 'find', value: 'find' },
+    { label: 'findOne', value: 'findOne' },
+    { label: 'update', value: 'update' },
+    { label: 'delete', value: 'delete' },
+  ]}
+>
+  <TabItem value="find">
+
+**Route -** `agent.find(query, fetchAll)`
+
+| Parameter Name | Type    | Default | Required | Description                                                                                  |
+| -------------- | ------- | ------- | -------- | -------------------------------------------------------------------------------------------- |
+| query          | String  | `''`    | No       | Query to search for agents [Read More](https://developer.freshdesk.com/api/#list_all_agents) |
+| fetchAll       | boolean | `false` | No       | Fetches all agents using paging                                                              |
+
+**Database Lifecycle Example**
+
+```js title='./api/agent/models/agent.js'
+const { agent } = strapi.services.freshdesk;
+
+module.exports = {
+  // Automatically queries Freshdesk for agent data
+  // and injects it into the payload being sent to the database
+  lifecycles: {
+    async beforeCreate(data) {
+      let response = await agent.find({ email: data.email });
+
+      if (response && response[0].contact.email === data.email) {
+        data.agent_id = response[0].id; // assumes integer field exists
+        data.agent_active = response[0].active; // assumes boolean field exists
+      }
+    },
+  },
+};
+```
+
+  </TabItem>
+  <TabItem value="findOne">
+
+**Route -** `agent.findOne(id)`
+
+| Parameter Name | Type    | Default | Required | Description        |
+| -------------- | ------- | ------- | -------- | ------------------ |
+| id             | integer | `''`    | Yes      | Freshdesk Agent ID |
+
+**Database Lifecycle Example**
+
+```js title='./api/agent/models/agent.js'
+const { agent } = strapi.services.freshdesk;
+
+module.exports = {
+  // Automatically queries Freshdesk for agent data
+  // and updates the local cache in Strapi
+  lifecycles: {
+    async beforeUpdate(params, data) {
+      let entry = await strapi.query('agent').findOne({ id: params.id });
+
+      let response = {};
+      if (data.agent_id) {
+        response = await agent.findOne(data.agent_id);
+      } else if (entry && entry.agent_id) {
+        response = await agent.findOne(data.agent_id);
+      }
+
+      if (response && response.active) {
+        data.agent_active = response.active; // assumes boolean field exists
+      }
+    },
+  },
+};
+```
+
+  </TabItem>
+  <TabItem value="update">
+
+**Route -** `agent.update`
+
+  </TabItem>
+  <TabItem value="delete">
+
+**Route -** `agent.delete`
+
+  </TabItem>
+</Tabs>
+
+## Companies
+
+**Core Route -** `strapi.services.freshdesk.agent`
+
+When multiple contacts from the same company contact you, it is better to group them into a company. This way, the tickets of the contacts can be mapped to the company. This also enables you to find an alternative person to call/email when a contact is unavailable
+
+## Contacts
+
+**Core Route -** `strapi.services.freshdesk.contact`
+
+A contact is a customer or a potential customer who has raised a support ticket through any channel.
+
+## Conversations
+
+**Core Route -** `strapi.services.freshdesk.conversation`
+
+Conversations consist of replies as well as public and private notes added to a ticket. Notes are non-invasive ways of sharing updates about a ticket amongst agents and customers. Private notes are for collaboration between agents and are not visible to the customer. Public notes are visible to, and can be created by, both customers and agents.
+
+## Roles
+
+**Core Route -** `strapi.services.freshdesk.role`
+
+Roles allow you to create special privileges and profiles specifying what an agent can see and do within your Freshdesk support portal. These roles help you classify your team into different sections and assign them capabilities so that they get to do what they need to on their helpdesk, without getting in each other's way. They are especially useful for larger teams where there are different groups of employees trying to handle different things.
+
+## Settings
+
+**Core Route -** `strapi.services.freshdesk.settings`
+
+Settings are configured through the Admin page of the Freshdesk web app.
+
+## Tickets
+
+**Core Route -** `strapi.services.freshdesk.ticket`
+
+A ticket is an issue raised by a requester that need to be solved. It could be an urgent, high-priority problem exposing a security vulnerability. It could also be low priority question about a free T-shirt. Tickets are assigned to agents based on the agent's expertise and on the subject of the ticket.
+
+## Time
+
+**Core Route -** `strapi.services.freshdesk.time`
+
+The time tracking feature in Freshdesk lets you track the time spent by each agent on resolving tickets and thereby enables you to gain visibility on the helpdesk's overall performance. Freshdesk lets agents track the time they spend on a ticket with automatic start and stop timers. Agents can also manually log the time they have spent, and detail their activities during this period by adding comments to the time entries.
+
+## Client (Upstream SDK)
+
+:::caution
+If you use callback based functions, you do so **at your own risk**. They are not supported by the maintainers of this hook.
+:::
+
+The client API is used to bypass this hook's custom logic and use the [freshdesk-api](https://www.npmjs.com/package/freshdesk-api) API functions.
+Since the current `freshdesk-api` documentation does not cover it, if you wish to use promise based functions you just need to add `Async` to the end of the function name.
+
+- **Callback Based:** `strapi.services.freshdesk.client.getTicket(id, callback)`
+- **Promise Based:** `strapi.services.freshdesk.client.getTicketAsync(id, callback)`
+
+At the time of writing, we have currently implemented all of the functions available in `freshdesk-api`. I do not currently support issues with using the callback based functions, as Strapi is based on Koa.js and primarily uses promise based functions.
